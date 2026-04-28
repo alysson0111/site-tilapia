@@ -57,24 +57,18 @@ function Home() {
           Comprar Tilápia no WhatsApp
         </a>
 
-        <p style={{ marginTop: 10, fontWeight: "bold" }}>
-          ⚠️ Pedido mínimo: 5kg
-        </p>
-
-        <p style={{ color: "yellow", fontWeight: "bold", marginTop: 10 }}>
-          🔥 Entregas limitadas!
-        </p>
       </div>
 
       <div style={styles.grid}>
         <div style={styles.card}>
-          <h3>Entrega Rápida</h3>
-          <p>Receba peixe fresco no mesmo dia</p>
+          <h3>Pedidos e Entregas</h3>
+          <p>Pedidos de segunda a quinta;</p>
+          <p>Entregas sexta;</p>
         </div>
 
         <div style={styles.card}>
           <h3>Qualidade Premium</h3>
-          <p>Direto do tanque, sem intermediários</p>
+          <p>Direto do tanque, sem intermediários e alimentadas com ração premium.</p>
         </div>
 
         <div style={styles.card}>
@@ -92,8 +86,6 @@ function Home() {
 }
 
 function Produtos() {
-  const pedidoMinimo = 5;
-
   const lista = [
     { nome: "Tilápia Inteira", preco: 18 },
     { nome: "Filé de Tilápia", preco: 38 },
@@ -112,14 +104,9 @@ function Produtos() {
     <div style={{ padding: 20 }}>
       <h2>Produtos</h2>
 
-      <p style={{ color: "red", fontWeight: "bold" }}>
-        Pedido mínimo: {pedidoMinimo}kg
-      </p>
-
       {lista.map((item, i) => {
         const qtd = quantidades[i];
         const total = qtd * item.preco;
-        const valido = qtd >= pedidoMinimo;
 
         return (
           <div
@@ -145,14 +132,7 @@ function Produtos() {
 
             <p><strong>Total: R$ {total}</strong></p>
 
-            {!valido && (
-              <p style={{ color: "orange" }}>
-                Faltam {pedidoMinimo - qtd}kg para atingir o mínimo
-              </p>
-            )}
-
             <button
-              disabled={!valido}
               onClick={() => {
                 const mensagem = `Quero comprar ${qtd}kg de ${item.nome}. Você entrega hoje? (Total: R$ ${total})`;
 
@@ -161,12 +141,12 @@ function Produtos() {
                 );
               }}
               style={{
-                background: valido ? "#25D366" : "#ccc",
+                background: "#25D366",
                 color: "#fff",
                 padding: 10,
                 border: "none",
                 borderRadius: 6,
-                cursor: valido ? "pointer" : "not-allowed",
+                cursor: "pointer",
               }}
             >
               Comprar
@@ -182,7 +162,7 @@ function Contato() {
   return (
     <div style={styles.container}>
       <h2>Contato</h2>
-      <p>📍 Entregas em toda Aracaju e região</p>
+      <p>📍 Entregamos em Aracaju, Itabaiana, Campo do Brito, Macambira, Nossa Senhora do Socorro e região</p>
       <p>📞 (79) 99848-5516</p>
     </div>
   );
@@ -213,7 +193,6 @@ export default function App() {
         </Routes>
       </Router>
 
-      {/* RODAPÉ */}
       <footer
         style={{
           marginTop: 40,
@@ -226,7 +205,6 @@ export default function App() {
         © {new Date().getFullYear()} Tilápia Premium - Todos os direitos reservados
       </footer>
 
-      {/* BOTÃO FLUTUANTE */}
       <a
         href={`https://wa.me/${WHATSAPP}?text=Olá! Quero comprar tilápia`}
         target="_blank"
