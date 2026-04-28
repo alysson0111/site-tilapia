@@ -62,7 +62,7 @@ function Home() {
         </p>
 
         <p style={{ color: "yellow", fontWeight: "bold", marginTop: 10 }}>
-          🔥 Entregas limitadas para hoje!
+          🔥 Entregas limitadas!
         </p>
       </div>
 
