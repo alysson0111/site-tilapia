@@ -46,8 +46,7 @@ function Home() {
       <div style={styles.hero}>
         <h1>Tilápia Premium 🐟</h1>
         <p>
-          Tilápia fresca direto do produtor 🐟 | Sem atravessador | Entrega
-          rápida
+          Tilápia fresca direto do produtor 🐟 | Sem atravessador | Entrega rápida em Aracaju
         </p>
 
         <a
@@ -63,20 +62,19 @@ function Home() {
         </p>
 
         <p style={{ color: "yellow", fontWeight: "bold", marginTop: 10 }}>
-          🔥 Pedidos limitados!
+          🔥 Entregas limitadas para hoje!
         </p>
       </div>
 
       <div style={styles.grid}>
         <div style={styles.card}>
-          <h3>Pedidos e Entregas</h3>
-          <p>Pedidos: Segunda a quinta;
-            Entregas: Sexta</p>
+          <h3>Entrega Rápida</h3>
+          <p>Receba peixe fresco no mesmo dia</p>
         </div>
 
         <div style={styles.card}>
           <h3>Qualidade Premium</h3>
-          <p>Direto do tanque, sem intermediários e alimentadas com ração premium</p>
+          <p>Direto do tanque, sem intermediários</p>
         </div>
 
         <div style={styles.card}>
@@ -145,9 +143,7 @@ function Produtos() {
               style={{ width: 60, marginLeft: 10 }}
             />
 
-            <p>
-              <strong>Total: R$ {total}</strong>
-            </p>
+            <p><strong>Total: R$ {total}</strong></p>
 
             {!valido && (
               <p style={{ color: "orange" }}>
@@ -161,9 +157,7 @@ function Produtos() {
                 const mensagem = `Quero comprar ${qtd}kg de ${item.nome}. Você entrega hoje? (Total: R$ ${total})`;
 
                 window.open(
-                  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
-                    mensagem
-                  )}`
+                  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensagem)}`
                 );
               }}
               style={{
@@ -218,6 +212,19 @@ export default function App() {
           <Route path="/contato" element={<Contato />} />
         </Routes>
       </Router>
+
+      {/* RODAPÉ */}
+      <footer
+        style={{
+          marginTop: 40,
+          padding: 20,
+          textAlign: "center",
+          background: "#0a2540",
+          color: "#fff",
+        }}
+      >
+        © {new Date().getFullYear()} Tilápia Premium - Todos os direitos reservados
+      </footer>
 
       {/* BOTÃO FLUTUANTE */}
       <a
