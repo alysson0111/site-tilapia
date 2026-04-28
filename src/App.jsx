@@ -46,7 +46,7 @@ function Home() {
       <div style={styles.hero}>
         <h1>Tilápia Premium 🐟</h1>
         <p>
-          Tilápia fresca direto do produtor 🐟 | Sem atravessador | Entrega rápida em Aracaju
+          Tilápia fresca direto do produtor 🐟 | Sem atravessador | Entrega rápida
         </p>
 
         <a
@@ -56,6 +56,7 @@ function Home() {
         >
           Comprar Tilápia no WhatsApp
         </a>
+
 
       </div>
 
@@ -72,13 +73,16 @@ function Home() {
         </div>
 
         <div style={styles.card}>
-          <h3>Pedido Fácil</h3>
-          <p>Compre pelo WhatsApp em segundos</p>
+          <h3>Entregamos</h3>
+          <p>Aracaju;</p>
+          <p>Itabaiana;</p>
+          <p>Campo do Brito;</p>
+                    <p>Nossa Senhora do Socorro;</p>
         </div>
 
         <div style={styles.card}>
           <h3>Clientes satisfeitos</h3>
-          <p>⭐⭐⭐⭐⭐ +200 clientes atendidos em Aracaju</p>
+          <p>⭐⭐⭐⭐⭐ +200 clientes atendidos em Aracaju.</p>
         </div>
       </div>
     </div>
@@ -162,7 +166,8 @@ function Contato() {
   return (
     <div style={styles.container}>
       <h2>Contato</h2>
-      <p>📍 Entregamos em Aracaju, Itabaiana, Campo do Brito, Macambira, Nossa Senhora do Socorro e região</p>
+      <p>📍 Entregamos em Aracaju, Itabaiana, Campo do Brito, Macambira, Nossa Senhora do
+         Socorro.</p>
       <p>📞 (79) 99848-5516</p>
     </div>
   );
