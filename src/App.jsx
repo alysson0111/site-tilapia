@@ -45,35 +45,48 @@ function Home() {
     <div style={styles.container}>
       <div style={styles.hero}>
         <h1>Tilápia Premium 🐟</h1>
-        <p>Fresca, selecionada e entregue direto na sua casa</p>
+        <p>
+          Tilápia fresca direto do produtor 🐟 | Sem atravessador | Entrega
+          rápida
+        </p>
 
         <a
-          href={`https://wa.me/${WHATSAPP}?text=Quero%20comprar%20tilápia`}
+          href={`https://wa.me/${WHATSAPP}?text=Olá! Quero comprar tilápia hoje. Você entrega em Aracaju?`}
           target="_blank"
           style={styles.button}
         >
-          Comprar Agora
+          Comprar Tilápia no WhatsApp
         </a>
 
         <p style={{ marginTop: 10, fontWeight: "bold" }}>
           ⚠️ Pedido mínimo: 5kg
         </p>
+
+        <p style={{ color: "yellow", fontWeight: "bold", marginTop: 10 }}>
+          🔥 Pedidos limitados!
+        </p>
       </div>
 
       <div style={styles.grid}>
         <div style={styles.card}>
-          <h3>Entrega Rápida</h3>
-          <p>Receba peixe fresco no mesmo dia</p>
+          <h3>Pedidos e Entregas</h3>
+          <p>Pedidos: Segunda a quinta;
+            Entregas: Sexta</p>
         </div>
 
         <div style={styles.card}>
           <h3>Qualidade Premium</h3>
-          <p>Direto do tanque, sem intermediários</p>
+          <p>Direto do tanque, sem intermediários e alimentadas com ração premium</p>
         </div>
 
         <div style={styles.card}>
           <h3>Pedido Fácil</h3>
           <p>Compre pelo WhatsApp em segundos</p>
+        </div>
+
+        <div style={styles.card}>
+          <h3>Clientes satisfeitos</h3>
+          <p>⭐⭐⭐⭐⭐ +200 clientes atendidos em Aracaju</p>
         </div>
       </div>
     </div>
@@ -132,7 +145,9 @@ function Produtos() {
               style={{ width: 60, marginLeft: 10 }}
             />
 
-            <p><strong>Total: R$ {total}</strong></p>
+            <p>
+              <strong>Total: R$ {total}</strong>
+            </p>
 
             {!valido && (
               <p style={{ color: "orange" }}>
@@ -143,10 +158,12 @@ function Produtos() {
             <button
               disabled={!valido}
               onClick={() => {
-                const mensagem = `Quero comprar ${qtd}kg de ${item.nome} (Total: R$ ${total})`;
+                const mensagem = `Quero comprar ${qtd}kg de ${item.nome}. Você entrega hoje? (Total: R$ ${total})`;
 
                 window.open(
-                  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensagem)}`
+                  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
+                    mensagem
+                  )}`
                 );
               }}
               style={{
@@ -171,7 +188,7 @@ function Contato() {
   return (
     <div style={styles.container}>
       <h2>Contato</h2>
-      <p>📍 Aracaju - SE</p>
+      <p>📍 Entregas em toda Aracaju e região</p>
       <p>📞 (79) 99848-5516</p>
     </div>
   );
@@ -204,7 +221,7 @@ export default function App() {
 
       {/* BOTÃO FLUTUANTE */}
       <a
-        href={`https://wa.me/${WHATSAPP}?text=Quero%20comprar%20tilápia`}
+        href={`https://wa.me/${WHATSAPP}?text=Olá! Quero comprar tilápia`}
         target="_blank"
         style={{
           position: "fixed",
