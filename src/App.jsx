@@ -115,8 +115,7 @@ function Home() {
 
       <section className="section product-strip" aria-labelledby="produtos-destaque">
         <div className="section-heading">
-          <p className="eyebrow">Produtos</p>
-          <h2 id="produtos-destaque">Escolha o formato ideal para seu pedido</h2>
+          <h2 id="produtos-destaque">Escolha os produtos ideais para seu pedido</h2>
         </div>
 
         <div className="product-grid">
