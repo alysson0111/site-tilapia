@@ -219,6 +219,13 @@
   margin-bottom: 24px;
 }
 
+.product-strip .section-heading {
+  display: block;
+  max-width: 860px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
 .section-heading h2,
 .info-band h2,
 .split-section h2,
