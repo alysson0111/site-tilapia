@@ -1,233 +1,315 @@
-import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { HashRouter as Router, Routes, Route, Link, NavLink } from "react-router-dom";
+import heroImage from "./assets/hero-tilapia.png";
+import "./App.css";
 
 const WHATSAPP = "5579998485516";
+const ORDER_TEXT =
+  "Olá! Quero comprar tilápia premium. Pode me passar disponibilidade, valores e entrega?";
 
-const styles = {
-  container: {
-    maxWidth: 1100,
-    margin: "auto",
-    padding: 20,
+const products = [
+  {
+    name: "Tilápia Inteira",
+    price: 18,
+    badge: "Mais pedida",
+    description: "Peixe fresco, limpo sob encomenda e ideal para assar, fritar ou cozinhar.",
   },
-  hero: {
-    background: "linear-gradient(135deg, #0a2540, #00a859)",
-    color: "#fff",
-    padding: 40,
-    borderRadius: 12,
-    textAlign: "center",
+  {
+    name: "Filé de Tilápia",
+    price: 38,
+    badge: "Pronto para preparo",
+    description: "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias.",
   },
-  button: {
-    background: "#25D366",
-    color: "#fff",
-    padding: "12px 20px",
-    borderRadius: 8,
-    textDecoration: "none",
-    display: "inline-block",
-    marginTop: 15,
-    fontWeight: "bold",
+  {
+    name: "Tilápia Viva",
+    price: 15,
+    badge: "Direto do tanque",
+    description: "Opção para clientes que preferem receber o peixe vivo e selecionar o preparo.",
   },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: 20,
-    marginTop: 30,
-  },
-  card: {
-    background: "#fff",
-    borderRadius: 12,
-    padding: 20,
-    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-  },
-};
+];
+
+const deliveryCities = [
+  "Aracaju",
+  "Itabaiana",
+  "Campo do Brito",
+  "Macambira",
+  "Nossa Senhora do Socorro",
+];
+
+function whatsappLink(message = ORDER_TEXT) {
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
+}
+
+function Currency({ value }) {
+  return (
+    <span>
+      {value.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      })}
+    </span>
+  );
+}
+
+function Header() {
+  return (
+    <header className="site-header">
+      <Link className="brand" to="/" aria-label="Tilápia Premium">
+        <span className="brand-mark">TP</span>
+        <span>
+          <strong>Tilápia Premium</strong>
+          <small>direto do produtor</small>
+        </span>
+      </Link>
+
+      <nav className="main-nav" aria-label="Navegação principal">
+        <NavLink to="/">Início</NavLink>
+        <NavLink to="/produtos">Produtos</NavLink>
+        <NavLink to="/contato">Contato</NavLink>
+      </nav>
+
+      <a className="header-cta" href={whatsappLink()} target="_blank" rel="noreferrer">
+        Pedir agora
+      </a>
+    </header>
+  );
+}
 
 function Home() {
   return (
-    <div style={styles.container}>
-      <div style={styles.hero}>
-        <h1>Tilápia Premium 🐟</h1>
-        <p>
-          Tilápia fresca direto do produtor 🐟 | Sem atravessador | Entrega rápida
-        </p>
+    <main>
+      <section
+        className="hero-section"
+        style={{ "--hero-image": `url(${heroImage})` }}
+        aria-label="Tilápia fresca sobre gelo"
+      >
+        <div className="hero-copy">
+          <p className="eyebrow">Entrega semanal em Sergipe</p>
+          <h1>Tilápia fresca, compre direto de quem produz.</h1>
+          <p className="hero-text">
+            Peça tilápia inteira, filé ou viva com atendimento rápido no WhatsApp,
+            preço por kg e entrega programada para sua cidade.
+          </p>
 
-        <a
-          href={`https://wa.me/${WHATSAPP}?text=Olá! Quero comprar tilápia hoje. Você entrega em Aracaju?`}
-          target="_blank"
-          style={styles.button}
-        >
-          Comprar Tilápia no WhatsApp
-        </a>
+          <div className="hero-actions">
+            <a className="button primary" href={whatsappLink()} target="_blank" rel="noreferrer">
+              Comprar pelo WhatsApp
+            </a>
+            <Link className="button secondary" to="/produtos">
+              Ver produtos
+            </Link>
+          </div>
 
+          <div className="trust-row" aria-label="Destaques">
+            <span>+200 clientes atendidos</span>
+            <span>Sem atravessador</span>
+            <span>Pedidos de segunda a quinta</span>
+          </div>
 
-      </div>
+          <div className="price-note">
+            <strong>A partir de R$ 15/kg</strong>
+            <span>consulte disponibilidade</span>
+          </div>
+        </div>
+      </section>
 
-      <div style={styles.grid}>
-        <div style={styles.card}>
-          <h3>Pedidos e Entregas</h3>
-          <p>Pedidos de segunda a quinta;</p>
-          <p>Entregas sexta;</p>
+      <section className="section product-strip" aria-labelledby="produtos-destaque">
+        <div className="section-heading">
+          <p className="eyebrow">Produtos</p>
+          <h2 id="produtos-destaque">Escolha o formato ideal para seu pedido</h2>
         </div>
 
-        <div style={styles.card}>
-          <h3>Qualidade Premium</h3>
-          <p>Direto do tanque, sem intermediários e alimentadas com ração premium.</p>
+        <div className="product-grid">
+          {products.map((product) => (
+            <article className="product-card" key={product.name}>
+              <span className="badge">{product.badge}</span>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <strong>
+                <Currency value={product.price} /> / kg
+              </strong>
+            </article>
+          ))}
         </div>
+      </section>
 
-        <div style={styles.card}>
-          <h3>Entregamos</h3>
-          <p>Aracaju;</p>
-          <p>Itabaiana;</p>
-          <p>Campo do Brito;</p>
-                    <p>Nossa Senhora do Socorro;</p>
+      <section className="section info-band">
+        <div>
+          <p className="eyebrow">Como funciona</p>
+          <h2>Pedido simples, entrega organizada.</h2>
         </div>
+        <div className="steps">
+          <div>
+            <span>1</span>
+            <p>Você chama no WhatsApp e informa produto, quantidade e cidade.</p>
+          </div>
+          <div>
+            <span>2</span>
+            <p>Confirmamos disponibilidade, valor total e janela de entrega.</p>
+          </div>
+          <div>
+            <span>3</span>
+            <p>O pedido segue fresco, direto do produtor, no dia combinado.</p>
+          </div>
+        </div>
+      </section>
 
-        <div style={styles.card}>
-          <h3>Clientes satisfeitos</h3>
-          <p>⭐⭐⭐⭐⭐ +200 clientes atendidos em Aracaju.</p>
+      <section className="section split-section">
+        <div>
+          <p className="eyebrow">Entrega</p>
+          <h2>Atendimento em Aracaju e região.</h2>
+          <p>
+            Entregas às sextas, com pedidos recebidos de segunda a quinta. Para
+            volumes maiores, consulte condições especiais.
+          </p>
         </div>
-      </div>
-    </div>
+        <ul className="city-list">
+          {deliveryCities.map((city) => (
+            <li key={city}>{city}</li>
+          ))}
+        </ul>
+      </section>
+    </main>
   );
 }
 
 function Produtos() {
-  const lista = [
-    { nome: "Tilápia Inteira", preco: 18 },
-    { nome: "Filé de Tilápia", preco: 38 },
-    { nome: "Tilápia Viva", preco: 15 },
-  ];
+  const [quantities, setQuantities] = useState(products.map(() => 1));
 
-  const [quantidades, setQuantidades] = useState([1, 1, 1]);
+  const totals = useMemo(
+    () => products.map((product, index) => product.price * quantities[index]),
+    [quantities],
+  );
 
-  const alterarQtd = (index, valor) => {
-    const novas = [...quantidades];
-    novas[index] = valor;
-    setQuantidades(novas);
-  };
+  function changeQuantity(index, value) {
+    const numericValue = Math.max(1, Number(value) || 1);
+    setQuantities((current) =>
+      current.map((quantity, quantityIndex) =>
+        quantityIndex === index ? numericValue : quantity,
+      ),
+    );
+  }
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Produtos</h2>
+    <main className="page">
+      <section className="page-heading">
+        <p className="eyebrow">Tabela por kg</p>
+        <h1>Produtos frescos para comprar hoje</h1>
+        <p>
+          Ajuste a quantidade, veja uma estimativa e envie o pedido pronto pelo
+          WhatsApp.
+        </p>
+      </section>
 
-      {lista.map((item, i) => {
-        const qtd = quantidades[i];
-        const total = qtd * item.preco;
+      <div className="order-list">
+        {products.map((product, index) => {
+          const total = totals[index];
+          const quantity = quantities[index];
+          const message = `Quero comprar ${quantity}kg de ${product.name}. Entrega em minha cidade? Total estimado: R$ ${total.toFixed(2).replace(".", ",")}.`;
 
-        return (
-          <div
-            key={i}
-            style={{
-              border: "1px solid #ddd",
-              padding: 15,
-              borderRadius: 8,
-              marginBottom: 15,
-            }}
-          >
-            <h3>{item.nome}</h3>
-            <p>Preço: R$ {item.preco}/kg</p>
+          return (
+            <article className="order-card" key={product.name}>
+              <div>
+                <span className="badge">{product.badge}</span>
+                <h2>{product.name}</h2>
+                <p>{product.description}</p>
+              </div>
 
-            <label>Quantidade (kg): </label>
-            <input
-              type="number"
-              min="1"
-              value={qtd}
-              onChange={(e) => alterarQtd(i, Number(e.target.value))}
-              style={{ width: 60, marginLeft: 10 }}
-            />
+              <div className="order-controls">
+                <label>
+                  Quantidade (kg)
+                  <input
+                    type="number"
+                    min="1"
+                    value={quantity}
+                    onChange={(event) => changeQuantity(index, event.target.value)}
+                  />
+                </label>
 
-            <p><strong>Total: R$ {total}</strong></p>
+                <div className="total-box">
+                  <small>Total estimado</small>
+                  <strong>
+                    <Currency value={total} />
+                  </strong>
+                </div>
 
-            <button
-              onClick={() => {
-                const mensagem = `Quero comprar ${qtd}kg de ${item.nome}. Você entrega hoje? (Total: R$ ${total})`;
-
-                window.open(
-                  `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensagem)}`
-                );
-              }}
-              style={{
-                background: "#25D366",
-                color: "#fff",
-                padding: 10,
-                border: "none",
-                borderRadius: 6,
-                cursor: "pointer",
-              }}
-            >
-              Comprar
-            </button>
-          </div>
-        );
-      })}
-    </div>
+                <a
+                  className="button primary"
+                  href={whatsappLink(message)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Comprar
+                </a>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </main>
   );
 }
 
 function Contato() {
   return (
-    <div style={styles.container}>
-      <h2>Contato</h2>
-      <p>📍 Entregamos em Aracaju, Itabaiana, Campo do Brito, Macambira, Nossa Senhora do
-         Socorro.</p>
-      <p>📞 (79) 99848-5516</p>
-    </div>
+    <main className="page contact-page">
+      <section className="page-heading">
+        <p className="eyebrow">Contato</p>
+        <h1>Fale direto com o produtor</h1>
+        <p>
+          Tire dúvidas, confirme a rota da semana e feche seu pedido pelo WhatsApp.
+        </p>
+      </section>
+
+      <section className="contact-grid">
+        <article>
+          <h2>WhatsApp</h2>
+          <p>(79) 99848-5516</p>
+          <a className="button primary" href={whatsappLink()} target="_blank" rel="noreferrer">
+            Chamar agora
+          </a>
+        </article>
+        <article>
+          <h2>Entregas</h2>
+          <p>{deliveryCities.join(", ")}.</p>
+        </article>
+        <article>
+          <h2>Agenda</h2>
+          <p>Pedidos de segunda a quinta. Entregas programadas às sextas.</p>
+        </article>
+      </section>
+    </main>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="site-footer">
+      <strong>Tilápia Premium</strong>
+      <span>© {new Date().getFullYear()} - Todos os direitos reservados</span>
+    </footer>
   );
 }
 
 export default function App() {
   return (
-    <>
-      <Router>
-        <nav
-          style={{
-            padding: 15,
-            background: "#0a2540",
-            display: "flex",
-            justifyContent: "center",
-            gap: 20,
-          }}
-        >
-          <Link to="/" style={{ color: "#fff" }}>Home</Link>
-          <Link to="/produtos" style={{ color: "#fff" }}>Produtos</Link>
-          <Link to="/contato" style={{ color: "#fff" }}>Contato</Link>
-        </nav>
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/produtos" element={<Produtos />} />
-          <Route path="/contato" element={<Contato />} />
-        </Routes>
-      </Router>
-
-      <footer
-        style={{
-          marginTop: 40,
-          padding: 20,
-          textAlign: "center",
-          background: "#0a2540",
-          color: "#fff",
-        }}
-      >
-        © {new Date().getFullYear()} Tilápia Premium - Todos os direitos reservados
-      </footer>
-
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/produtos" element={<Produtos />} />
+        <Route path="/contato" element={<Contato />} />
+      </Routes>
+      <Footer />
       <a
-        href={`https://wa.me/${WHATSAPP}?text=Olá! Quero comprar tilápia`}
+        className="floating-whatsapp"
+        href={whatsappLink("Olá! Quero comprar tilápia. Pode me atender?")}
         target="_blank"
-        style={{
-          position: "fixed",
-          bottom: 20,
-          right: 20,
-          background: "#25D366",
-          color: "#fff",
-          padding: "16px 18px",
-          borderRadius: "50%",
-          fontSize: 22,
-          textDecoration: "none",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-        }}
+        rel="noreferrer"
+        aria-label="Comprar pelo WhatsApp"
       >
-        💬
+        ☎
       </a>
-    </>
+    </Router>
   );
 }
