@@ -21,14 +21,10 @@
 }
 
 .brand-mark {
-  display: grid;
   width: 42px;
   height: 42px;
-  place-items: center;
   border-radius: 8px;
-  color: #ffffff;
-  background: var(--green);
-  font-weight: 800;
+  object-fit: cover;
 }
 
 .brand strong,

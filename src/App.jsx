@@ -55,7 +55,7 @@ function Header() {
   return (
     <header className="site-header">
       <Link className="brand" to="/" aria-label="Tilápia Premium">
-        <span className="brand-mark">TP</span>
+        <img className="brand-mark" src="/favicon.svg" alt="" aria-hidden="true" />
         <span>
           <strong>Tilápia Premium</strong>
           <small>direto do produtor</small>
