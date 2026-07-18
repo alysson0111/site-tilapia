@@ -24,7 +24,7 @@ const products = [
   },
   {
     name: "Tilápia Viva",
-    price: 15,
+    price: 14.99,
     badge: "Direto do tanque",
     description: "Opção para clientes que preferem receber o peixe vivo e selecionar o preparo.",
   },
