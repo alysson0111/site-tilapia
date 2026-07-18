@@ -10,7 +10,7 @@ const ORDER_TEXT =
 const products = [
   {
     name: "Tilápia Inteira",
-    price: 18,
+    price: 17.99,
     badge: "Mais pedida",
     description: "Peixe fresco, limpo sob encomenda e ideal para assar, fritar ou cozinhar.",
   },
