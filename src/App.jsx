@@ -17,8 +17,10 @@ const products = [
   {
     name: "Filé de Tilápia",
     price: 38,
-    badge: "Pronto para preparo",
-    description: "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias.",
+    badge: "Indisponível no momento",
+    available: false,
+    description:
+      "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias. Indisponível no momento.",
   },
   {
     name: "Tilápia Viva",
@@ -120,13 +122,22 @@ function Home() {
 
         <div className="product-grid">
           {products.map((product) => (
-            <article className="product-card" key={product.name}>
-              <span className="badge">{product.badge}</span>
+            <article
+              className={`product-card ${product.available === false ? "is-unavailable" : ""}`}
+              key={product.name}
+            >
+              <span className={`badge ${product.available === false ? "warning" : ""}`}>
+                {product.badge}
+              </span>
               <h3>{product.name}</h3>
               <p>{product.description}</p>
-              <strong>
-                <Currency value={product.price} /> / kg
-              </strong>
+              {product.available === false ? (
+                <strong className="unavailable-text">Indisponível no momento</strong>
+              ) : (
+                <strong>
+                  <Currency value={product.price} /> / kg
+                </strong>
+              )}
             </article>
           ))}
         </div>
@@ -207,9 +218,14 @@ function Produtos() {
           const message = `Quero comprar ${quantity}kg de ${product.name}. Entrega em minha cidade? Total estimado: R$ ${total.toFixed(2).replace(".", ",")}.`;
 
           return (
-            <article className="order-card" key={product.name}>
+            <article
+              className={`order-card ${product.available === false ? "is-unavailable" : ""}`}
+              key={product.name}
+            >
               <div>
-                <span className="badge">{product.badge}</span>
+                <span className={`badge ${product.available === false ? "warning" : ""}`}>
+                  {product.badge}
+                </span>
                 <h2>{product.name}</h2>
                 <p>{product.description}</p>
               </div>
@@ -221,25 +237,39 @@ function Produtos() {
                     type="number"
                     min="1"
                     value={quantity}
+                    disabled={product.available === false}
                     onChange={(event) => changeQuantity(index, event.target.value)}
                   />
                 </label>
 
                 <div className="total-box">
-                  <small>Total estimado</small>
-                  <strong>
-                    <Currency value={total} />
-                  </strong>
+                  {product.available === false ? (
+                    <>
+                      <small>Status</small>
+                      <strong>Indisponível</strong>
+                    </>
+                  ) : (
+                    <>
+                      <small>Total estimado</small>
+                      <strong>
+                        <Currency value={total} />
+                      </strong>
+                    </>
+                  )}
                 </div>
 
-                <a
-                  className="button primary"
-                  href={whatsappLink(message)}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Comprar
-                </a>
+                {product.available === false ? (
+                  <span className="button disabled">Indisponível no momento</span>
+                ) : (
+                  <a
+                    className="button primary"
+                    href={whatsappLink(message)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Comprar
+                  </a>
+                )}
               </div>
             </article>
           );
