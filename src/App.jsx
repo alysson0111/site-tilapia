@@ -109,7 +109,7 @@ function Home() {
           </div>
 
           <div className="price-note">
-            <strong>A partir de R$ 15/kg</strong>
+            <strong>A partir de R$ 14,99/kg</strong>
             <span>consulte disponibilidade</span>
           </div>
         </div>
