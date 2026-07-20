@@ -23,7 +23,7 @@ const products = [
       "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias. Indisponível no momento.",
   },
   {
-    name: "Tilápia Viva",
+    name: "Tilápia Inteira (sem limpar)",
     price: 14.99,
     badge: "Direto do tanque",
     description: "Opção para clientes que preferem receber o peixe vivo e selecionar o preparo.",
