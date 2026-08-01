@@ -23,7 +23,7 @@ const products = [
       "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias. Indisponível no momento.",
   },
   {
-    name: "Tilápia Inteira (sem limpar)",
+    name: "Tilápia de 600g a 800g",
     price: 14.99,
     badge: "Direto do tanque",
     description: "Opção para clientes que preferem receber o peixe inteiro.",
