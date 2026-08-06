@@ -25,8 +25,9 @@ const products = [
   {
     name: "Tilápia de 600g a 800g",
     price: 14.99,
-    badge: "Direto do tanque",
-    description: "Opção para clientes que preferem receber o peixe inteiro.",
+    badge: "Indisponível no momento",
+    available: false,
+    description: "Opção para clientes que preferem receber o peixe inteiro. Indisponível no momento.",
   },
 ];
 
