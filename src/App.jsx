@@ -186,7 +186,7 @@ function Home() {
 }
 
 function Produtos() {
-  const [quantities, setQuantities] = useState(products.map(() => MIN_ORDER_KG));
+  const [quantities, setQuantities] = useState(products.map(() => 1));
 
   const totals = useMemo(
     () => products.map((product, index) => product.price * quantities[index]),
@@ -194,7 +194,7 @@ function Produtos() {
   );
 
   function changeQuantity(index, value) {
-    const numericValue = Math.max(MIN_ORDER_KG, Number(value) || MIN_ORDER_KG);
+    const numericValue = Math.max(1, Number(value) || 1);
     setQuantities((current) =>
       current.map((quantity, quantityIndex) =>
         quantityIndex === index ? numericValue : quantity,
@@ -208,7 +208,7 @@ function Produtos() {
         <p className="eyebrow">Tabela por kg</p>
         <h1>Produtos frescos para comprar hoje</h1>
         <p>
-          Pedido mínimo de 5 kg. Ajuste a quantidade, veja uma estimativa e envie o pedido pronto pelo
+          O botão Comprar só fica ativo para pedidos a partir de 5 kg. Ajuste a quantidade, veja uma estimativa e envie o pedido pronto pelo
           WhatsApp.
         </p>
       </section>
@@ -217,6 +217,7 @@ function Produtos() {
         {products.map((product, index) => {
           const total = totals[index];
           const quantity = quantities[index];
+          const meetsMinimum = quantity >= MIN_ORDER_KG;
           const message = `Quero comprar ${quantity}kg de ${product.name}. Entrega em minha cidade? Total estimado: R$ ${total.toFixed(2).replace(".", ",")}.`;
 
           return (
@@ -237,7 +238,7 @@ function Produtos() {
                   Quantidade (kg)
                   <input
                     type="number"
-                    min={MIN_ORDER_KG}
+                    min="1"
                     value={quantity}
                     disabled={product.available === false}
                     onChange={(event) => changeQuantity(index, event.target.value)}
@@ -260,8 +261,14 @@ function Produtos() {
                   )}
                 </div>
 
+                {product.available !== false && !meetsMinimum ? (
+                  <p className="minimum-warning">Pedido mínimo: {MIN_ORDER_KG} kg.</p>
+                ) : null}
+
                 {product.available === false ? (
                   <span className="button disabled">Indisponível no momento</span>
+                ) : !meetsMinimum ? (
+                  <span className="button disabled">Mínimo de {MIN_ORDER_KG} kg</span>
                 ) : (
                   <a
                     className="button primary"
