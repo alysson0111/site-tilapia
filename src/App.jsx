@@ -23,7 +23,7 @@ const products = [
       "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias. Indisponível no momento.",
   },
   {
-    name: "Tilápia de 600g a 800g",
+    name: "Tilápias a partir de 1k",
     price: 14.99,
     badge: "Indisponível no momento",
     available: false,
