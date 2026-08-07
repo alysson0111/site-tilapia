@@ -38,6 +38,7 @@ const deliveryCities = [
   "Campo do Brito",
   "Macambira",
   "Nossa Senhora do Socorro",
+  "Barra dos Coqueiros",
 ];
 
 function whatsappLink(message = ORDER_TEXT) {
