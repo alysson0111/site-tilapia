@@ -112,7 +112,6 @@ function Home() {
           <div className="trust-row" aria-label="Destaques">
             <span>+200 clientes atendidos</span>
             <span>Sem atravessador</span>
-            <span>Pedidos de segunda a quinta</span>
           </div>
 
           <div className="price-note">
