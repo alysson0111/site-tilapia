@@ -24,7 +24,7 @@ const products = [
       "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias. Indisponível no momento.",
   },
   {
-    name: "Tilápias a partir de 1k",
+    name: "Tilápias a partir de 1kg",
     price: 14.99,
     badge: "Indisponível no momento",
     available: false,
