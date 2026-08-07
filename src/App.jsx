@@ -44,6 +44,11 @@ function whatsappLink(message = ORDER_TEXT) {
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`;
 }
 
+function parseQuantity(value) {
+  const normalizedValue = String(value).replace(",", ".");
+  return Number(normalizedValue) || 0;
+}
+
 function Currency({ value }) {
   return (
     <span>
@@ -186,18 +191,17 @@ function Home() {
 }
 
 function Produtos() {
-  const [quantities, setQuantities] = useState(products.map(() => 1));
+  const [quantities, setQuantities] = useState(products.map(() => ""));
 
   const totals = useMemo(
-    () => products.map((product, index) => product.price * quantities[index]),
+    () => products.map((product, index) => product.price * parseQuantity(quantities[index])),
     [quantities],
   );
 
   function changeQuantity(index, value) {
-    const numericValue = Math.max(1, Number(value) || 1);
     setQuantities((current) =>
       current.map((quantity, quantityIndex) =>
-        quantityIndex === index ? numericValue : quantity,
+        quantityIndex === index ? value : quantity,
       ),
     );
   }
@@ -217,8 +221,10 @@ function Produtos() {
         {products.map((product, index) => {
           const total = totals[index];
           const quantity = quantities[index];
-          const meetsMinimum = quantity >= MIN_ORDER_KG;
-          const message = `Quero comprar ${quantity}kg de ${product.name}. Entrega em minha cidade? Total estimado: R$ ${total.toFixed(2).replace(".", ",")}.`;
+          const quantityValue = parseQuantity(quantity);
+          const quantityLabel = quantity ? String(quantity).replace(".", ",") : "0";
+          const meetsMinimum = quantityValue >= MIN_ORDER_KG;
+          const message = `Quero comprar ${quantityLabel}kg de ${product.name}. Entrega em minha cidade? Total estimado: R$ ${total.toFixed(2).replace(".", ",")}.`;
 
           return (
             <article
@@ -237,8 +243,9 @@ function Produtos() {
                 <label>
                   Quantidade (kg)
                   <input
-                    type="number"
-                    min="1"
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="Digite os kg"
                     value={quantity}
                     disabled={product.available === false}
                     onChange={(event) => changeQuantity(index, event.target.value)}
