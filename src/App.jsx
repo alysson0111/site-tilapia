@@ -176,8 +176,7 @@ function Home() {
           <p className="eyebrow">Entrega</p>
           <h2>Atendimento em Aracaju e região.</h2>
           <p>
-            Entregas às sextas, com pedidos recebidos de segunda a quinta. Para
-            volumes maiores, consulte condições especiais.
+            Consulte programação de entregas.
           </p>
         </div>
         <ul className="city-list">
