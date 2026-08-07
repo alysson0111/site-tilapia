@@ -10,7 +10,7 @@ const ORDER_TEXT =
 const products = [
   {
     name: "Tilápias a partir de 800g",
-    price: 17.99,
+    price: 15.99,
     badge: "Mais pedida",
     description: "Peixe fresco, limpo sob encomenda e ideal para assar, fritar ou cozinhar.",
   },
