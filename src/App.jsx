@@ -6,6 +6,7 @@ import "./App.css";
 const WHATSAPP = "5579998485516";
 const ORDER_TEXT =
   "Olá! Quero comprar tilápia premium. Pode me passar disponibilidade, valores e entrega?";
+const MIN_ORDER_KG = 5;
 
 const products = [
   {
@@ -185,7 +186,7 @@ function Home() {
 }
 
 function Produtos() {
-  const [quantities, setQuantities] = useState(products.map(() => 1));
+  const [quantities, setQuantities] = useState(products.map(() => MIN_ORDER_KG));
 
   const totals = useMemo(
     () => products.map((product, index) => product.price * quantities[index]),
@@ -193,7 +194,7 @@ function Produtos() {
   );
 
   function changeQuantity(index, value) {
-    const numericValue = Math.max(1, Number(value) || 1);
+    const numericValue = Math.max(MIN_ORDER_KG, Number(value) || MIN_ORDER_KG);
     setQuantities((current) =>
       current.map((quantity, quantityIndex) =>
         quantityIndex === index ? numericValue : quantity,
@@ -207,7 +208,7 @@ function Produtos() {
         <p className="eyebrow">Tabela por kg</p>
         <h1>Produtos frescos para comprar hoje</h1>
         <p>
-          Ajuste a quantidade, veja uma estimativa e envie o pedido pronto pelo
+          Pedido mínimo de 5 kg. Ajuste a quantidade, veja uma estimativa e envie o pedido pronto pelo
           WhatsApp.
         </p>
       </section>
@@ -236,7 +237,7 @@ function Produtos() {
                   Quantidade (kg)
                   <input
                     type="number"
-                    min="1"
+                    min={MIN_ORDER_KG}
                     value={quantity}
                     disabled={product.available === false}
                     onChange={(event) => changeQuantity(index, event.target.value)}
