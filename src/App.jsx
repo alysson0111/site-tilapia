@@ -25,9 +25,8 @@ const products = [
   {
     name: "Tilápias a partir de 1kg",
     price: 14.99,
-    badge: "Indisponível no momento",
-    available: false,
-    description: "Opção para clientes que preferem receber o peixe inteiro. Indisponível no momento.",
+    badge: "Disponível",
+    description: "Opção para clientes que preferem receber o peixe inteiro.",
   },
 ];
 
