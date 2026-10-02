@@ -15,7 +15,7 @@ const products = [
     description: "Peixe fresco, limpo sob encomenda e ideal para assar, fritar ou cozinhar.",
   },
   {
-    name: "Filé de Tilápia 500g",
+    name: "Filé de Tilápia",
     price: 19.9,
     priceWeightKg: 0.5,
     badge: "Disponível",
