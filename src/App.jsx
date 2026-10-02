@@ -6,7 +6,6 @@ import "./App.css";
 const WHATSAPP = "5579998485516";
 const ORDER_TEXT =
   "Olá! Quero comprar tilápia premium. Pode me passar disponibilidade, valores e entrega?";
-const MIN_ORDER_KG = 5;
 
 const products = [
   {
@@ -16,12 +15,12 @@ const products = [
     description: "Peixe fresco, limpo sob encomenda e ideal para assar, fritar ou cozinhar.",
   },
   {
-    name: "Filé de Tilápia",
-    price: 38,
-    badge: "Indisponível no momento",
-    available: false,
+    name: "Filé de Tilápia 500g",
+    price: 19.9,
+    priceWeightKg: 0.5,
+    badge: "Disponível",
     description:
-      "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias. Indisponível no momento.",
+      "Corte prático, sem espinha aparente, ótimo para restaurantes e famílias.",
   },
   {
     name: "Tilápias a partir de 1kg",
@@ -142,7 +141,7 @@ function Home() {
                 <strong className="unavailable-text">Indisponível no momento</strong>
               ) : (
                 <strong>
-                  <Currency value={product.price} /> / kg
+                  <Currency value={product.price} /> / {product.priceWeightKg === 0.5 ? "500g" : "kg"}
                 </strong>
               )}
             </article>
@@ -193,7 +192,7 @@ function Produtos() {
   const [quantities, setQuantities] = useState(products.map(() => ""));
 
   const totals = useMemo(
-    () => products.map((product, index) => product.price * parseQuantity(quantities[index])),
+    () => products.map((product, index) => (product.price / (product.priceWeightKg ?? 1)) * parseQuantity(quantities[index])),
     [quantities],
   );
 
@@ -211,8 +210,7 @@ function Produtos() {
         <p className="eyebrow">Tabela por kg</p>
         <h1>Produtos frescos para comprar hoje</h1>
         <p>
-          O botão Comprar só fica ativo para pedidos a partir de 5 kg. Ajuste a quantidade, veja uma estimativa e envie o pedido pronto pelo
-          WhatsApp.
+          Todos os produtos sem pedido mínimo.
         </p>
       </section>
 
@@ -222,7 +220,7 @@ function Produtos() {
           const quantity = quantities[index];
           const quantityValue = parseQuantity(quantity);
           const quantityLabel = quantity ? String(quantity).replace(".", ",") : "0";
-          const meetsMinimum = quantityValue >= MIN_ORDER_KG;
+          const hasValidQuantity = Number.isFinite(quantityValue) && quantityValue > 0;
           const message = `Quero comprar ${quantityLabel}kg de ${product.name}. Entrega em minha cidade? Total estimado: R$ ${total.toFixed(2).replace(".", ",")}.`;
 
           return (
@@ -267,14 +265,12 @@ function Produtos() {
                   )}
                 </div>
 
-                {product.available !== false && !meetsMinimum ? (
-                  <p className="minimum-warning">Pedido mínimo: {MIN_ORDER_KG} kg.</p>
-                ) : null}
-
                 {product.available === false ? (
                   <span className="button disabled">Indisponível no momento</span>
-                ) : !meetsMinimum ? (
-                  <span className="button disabled">Mínimo de {MIN_ORDER_KG} kg</span>
+                ) : !hasValidQuantity ? (
+                  <span className="button disabled">
+                    Informe a quantidade
+                  </span>
                 ) : (
                   <a
                     className="button primary"
